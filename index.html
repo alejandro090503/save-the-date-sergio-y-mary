@@ -245,7 +245,7 @@ footer{background:var(--night)}
 .scene svg{width:100%;height:auto;overflow:visible}
 .scene .sunrise{animation:sunbob 9s ease-in-out infinite}
 @keyframes sunbob{50%{transform:translateY(7px)}}
-.scene .halo{transform-origin:160px 118px;animation:breathe 6s ease-in-out infinite}
+.scene .halo{transform-origin:236px 40px;animation:breathe 6s ease-in-out infinite}
 .scene .glints line{transform-box:fill-box;transform-origin:center;animation:glint2 3.2s ease-in-out infinite}
 .scene .glints line:nth-child(2){animation-delay:.4s}.scene .glints line:nth-child(3){animation-delay:.8s}.scene .glints line:nth-child(4){animation-delay:1.2s}.scene .glints line:nth-child(5){animation-delay:1.6s}
 @keyframes glint2{0%,100%{transform:scaleX(.55);opacity:.35}50%{transform:scaleX(1);opacity:1}}
@@ -371,6 +371,11 @@ border:1px solid rgba(255,240,200,.8);box-shadow:0 10px 30px -8px rgba(0,0,0,.7)
 .pol{margin:0;background:#FBF8EE;padding:8px 8px 34px;border-radius:4px;box-shadow:0 22px 50px -18px rgba(31,43,21,.45),0 0 0 1px rgba(212,175,55,.35);transform:rotate(var(--r))}
 .js .pol.rv.in{transform:rotate(var(--r))}
 .pol img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:2px}
+.scene .wins rect{animation:winTw 4s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes winTw{0%,100%{opacity:.95}50%{opacity:.25}}
+.scene .moon{animation:breathe 6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.scene .stars circle{animation:winTw 3s ease-in-out infinite}.scene .stars circle:nth-child(2n){animation-delay:1.2s}
+@media (prefers-reduced-motion:reduce){.scene *{animation:none!important}}
 </style>
 </head>
 <body class="locked">
@@ -500,32 +505,39 @@ border:1px solid rgba(255,240,200,.8);box-shadow:0 10px 30px -8px rgba(0,0,0,.7)
       <div class="scene rv" aria-hidden="true">
         <svg viewBox="0 0 320 210">
           <defs>
-            <linearGradient id="sunG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBF3DA"/><stop offset=".55" stop-color="#E8CF85"/><stop offset="1" stop-color="#6E8048"/></linearGradient>
-            <radialGradient id="seaG" cx=".5" cy="0" r=".6"><stop offset="0" stop-color="#A8BC78" stop-opacity=".55"/><stop offset=".6" stop-color="#A8BC78" stop-opacity=".18"/><stop offset="1" stop-color="#1f2b15" stop-opacity="0"/></radialGradient>
+            <radialGradient id="moonG"><stop offset="0" stop-color="#FFF8E4"/><stop offset=".7" stop-color="#F0DDA0"/><stop offset="1" stop-color="#D4AF37"/></radialGradient>
+            <radialGradient id="haloG"><stop offset="0" stop-color="#EBD9A6" stop-opacity=".5"/><stop offset="1" stop-color="#EBD9A6" stop-opacity="0"/></radialGradient>
             <linearGradient id="horG" x1="0" x2="1"><stop offset="0" stop-color="#F0E8D0" stop-opacity="0"/><stop offset=".5" stop-color="#F0E8D0"/><stop offset="1" stop-color="#F0E8D0" stop-opacity="0"/></linearGradient>
-            <clipPath id="above"><rect x="0" y="0" width="320" height="128"/></clipPath>
-            <radialGradient id="haloG"><stop offset="0" stop-color="#EBD9A6" stop-opacity=".55"/><stop offset="1" stop-color="#EBD9A6" stop-opacity="0"/></radialGradient>
+            <linearGradient id="goldL" x1="0" x2="1"><stop offset="0" stop-color="#B8923A"/><stop offset=".5" stop-color="#F7E7CE"/><stop offset="1" stop-color="#B8923A"/></linearGradient>
+            <linearGradient id="refl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".0"/><stop offset="1" stop-color="#000" stop-opacity="1"/></linearGradient>
+            <mask id="fadeM"><rect x="0" y="128" width="320" height="82" fill="#fff"/><rect x="0" y="128" width="320" height="82" fill="url(#refl)"/></mask>
+            <g id="city">
+              <g fill="rgba(233,223,180,.13)" stroke="rgba(233,223,180,.55)" stroke-width=".7"><rect x="18" y="96" width="16" height="32"/><rect x="36" y="84" width="14" height="44"/><rect x="52" y="104" width="12" height="24"/><rect x="66" y="70" width="16" height="58"/><rect x="84" y="90" width="12" height="38"/><rect x="98" y="60" width="18" height="68"/><rect x="118" y="80" width="14" height="48"/><rect x="204" y="78" width="14" height="50"/><rect x="220" y="58" width="18" height="70"/><rect x="240" y="88" width="12" height="40"/><rect x="254" y="66" width="16" height="62"/><rect x="272" y="94" width="14" height="34"/><rect x="288" y="80" width="12" height="48"/><rect x="302" y="100" width="14" height="28"/><path d="M98 60 L107 30 L116 60 Z"/><rect x="106.4" y="18" width="1.2" height="13"/></g>
+              <g class="wins" fill="#F3DFA0"><rect x="26" y="102" width="1.6" height="2.4" style="--d:2.60s"/><rect x="31" y="102" width="1.6" height="2.4" style="--d:2.14s"/><rect x="26" y="109" width="1.6" height="2.4" style="--d:2.03s"/><rect x="31" y="109" width="1.6" height="2.4" style="--d:1.73s"/><rect x="21" y="116" width="1.6" height="2.4" style="--d:0.36s"/><rect x="21" y="123" width="1.6" height="2.4" style="--d:0.89s"/><rect x="44" y="97" width="1.6" height="2.4" style="--d:3.43s"/><rect x="39" y="104" width="1.6" height="2.4" style="--d:0.58s"/><rect x="44" y="104" width="1.6" height="2.4" style="--d:1.23s"/><rect x="44" y="111" width="1.6" height="2.4" style="--d:2.33s"/><rect x="60" y="110" width="1.6" height="2.4" style="--d:0.24s"/><rect x="55" y="117" width="1.6" height="2.4" style="--d:2.72s"/><rect x="69" y="76" width="1.6" height="2.4" style="--d:2.34s"/><rect x="79" y="76" width="1.6" height="2.4" style="--d:3.18s"/><rect x="74" y="83" width="1.6" height="2.4" style="--d:2.30s"/><rect x="79" y="90" width="1.6" height="2.4" style="--d:3.92s"/><rect x="69" y="97" width="1.6" height="2.4" style="--d:1.67s"/><rect x="79" y="97" width="1.6" height="2.4" style="--d:1.96s"/><rect x="69" y="104" width="1.6" height="2.4" style="--d:2.67s"/><rect x="74" y="111" width="1.6" height="2.4" style="--d:2.78s"/><rect x="92" y="103" width="1.6" height="2.4" style="--d:2.81s"/><rect x="92" y="117" width="1.6" height="2.4" style="--d:1.54s"/><rect x="106" y="66" width="1.6" height="2.4" style="--d:1.85s"/><rect x="111" y="66" width="1.6" height="2.4" style="--d:0.47s"/><rect x="101" y="73" width="1.6" height="2.4" style="--d:3.07s"/><rect x="106" y="73" width="1.6" height="2.4" style="--d:0.99s"/><rect x="106" y="80" width="1.6" height="2.4" style="--d:1.80s"/><rect x="101" y="94" width="1.6" height="2.4" style="--d:1.66s"/><rect x="106" y="101" width="1.6" height="2.4" style="--d:0.70s"/><rect x="111" y="101" width="1.6" height="2.4" style="--d:0.93s"/><rect x="111" y="108" width="1.6" height="2.4" style="--d:0.02s"/><rect x="121" y="93" width="1.6" height="2.4" style="--d:3.60s"/><rect x="121" y="114" width="1.6" height="2.4" style="--d:2.54s"/><rect x="126" y="114" width="1.6" height="2.4" style="--d:0.27s"/><rect x="121" y="121" width="1.6" height="2.4" style="--d:0.65s"/><rect x="207" y="84" width="1.6" height="2.4" style="--d:0.00s"/><rect x="212" y="84" width="1.6" height="2.4" style="--d:0.41s"/><rect x="212" y="91" width="1.6" height="2.4" style="--d:3.50s"/><rect x="212" y="98" width="1.6" height="2.4" style="--d:1.01s"/><rect x="207" y="112" width="1.6" height="2.4" style="--d:3.40s"/><rect x="223" y="64" width="1.6" height="2.4" style="--d:0.41s"/><rect x="233" y="64" width="1.6" height="2.4" style="--d:3.32s"/><rect x="223" y="71" width="1.6" height="2.4" style="--d:0.09s"/><rect x="223" y="78" width="1.6" height="2.4" style="--d:2.17s"/><rect x="228" y="78" width="1.6" height="2.4" style="--d:2.11s"/><rect x="233" y="85" width="1.6" height="2.4" style="--d:1.47s"/><rect x="223" y="92" width="1.6" height="2.4" style="--d:3.09s"/><rect x="228" y="99" width="1.6" height="2.4" style="--d:3.25s"/><rect x="228" y="113" width="1.6" height="2.4" style="--d:2.07s"/><rect x="223" y="120" width="1.6" height="2.4" style="--d:0.11s"/><rect x="228" y="120" width="1.6" height="2.4" style="--d:1.04s"/><rect x="243" y="115" width="1.6" height="2.4" style="--d:0.91s"/><rect x="248" y="115" width="1.6" height="2.4" style="--d:0.82s"/><rect x="262" y="79" width="1.6" height="2.4" style="--d:2.64s"/><rect x="257" y="93" width="1.6" height="2.4" style="--d:3.16s"/><rect x="267" y="107" width="1.6" height="2.4" style="--d:0.51s"/><rect x="257" y="114" width="1.6" height="2.4" style="--d:3.62s"/><rect x="267" y="114" width="1.6" height="2.4" style="--d:3.31s"/><rect x="280" y="100" width="1.6" height="2.4" style="--d:0.06s"/><rect x="296" y="86" width="1.6" height="2.4" style="--d:1.01s"/><rect x="291" y="93" width="1.6" height="2.4" style="--d:0.96s"/><rect x="291" y="100" width="1.6" height="2.4" style="--d:1.68s"/><rect x="296" y="100" width="1.6" height="2.4" style="--d:3.64s"/><rect x="310" y="113" width="1.6" height="2.4" style="--d:1.76s"/><rect x="305" y="120" width="1.6" height="2.4" style="--d:0.02s"/></g>
+              <g fill="none" stroke="url(#goldL)" stroke-width="1.6" stroke-linecap="round">
+                <path d="M128 128 V54 M192 128 V54"/>
+                <path d="M124 128 V62 Q128 54 132 62 V128 M188 128 V62 Q192 54 196 62 V128" stroke-width="1.2"/>
+                <path d="M128 56 Q160 104 192 56" stroke-width="1.1"/>
+                <path d="M128 56 Q100 84 70 104 M192 56 Q220 84 250 104" stroke-width="1.1"/>
+                <path d="M60 110 Q160 98 260 110" stroke-width="2"/>
+              </g>
+              <g stroke="rgba(247,231,206,.55)" stroke-width=".45">
+                <path d="M136 69 V103 M144 79 V102 M152 86 V101 M160 88 V100 M168 86 V101 M176 79 V102 M184 69 V103"/>
+                <path d="M116 68 V105 M104 78 V106 M92 86 V107 M80 93 V108 M204 68 V105 M216 78 V106 M228 86 V107 M240 93 V108"/>
+              </g>
+            </g>
           </defs>
-          <circle class="halo" cx="160" cy="118" r="100" fill="url(#haloG)"/>
-          <g clip-path="url(#above)"><g class="sunrise">
-            <circle cx="160" cy="118" r="52" fill="url(#sunG)"/>
-            <g fill="#1f2b15" opacity=".55"><rect x="100" y="104" width="120" height="2.2"/><rect x="100" y="112" width="120" height="3"/><rect x="100" y="120" width="120" height="4"/></g>
-          </g></g>
-          <ellipse cx="160" cy="128" rx="170" ry="80" fill="url(#seaG)"/>
+          <circle class="halo" cx="236" cy="40" r="46" fill="url(#haloG)"/>
+          <circle class="moon" cx="236" cy="40" r="14" fill="url(#moonG)"/>
+          <use href="#city"/>
           <rect x="0" y="127.5" width="320" height="1.2" fill="url(#horG)"/>
+          <g mask="url(#fadeM)"><use href="#city" transform="translate(0 256) scale(1 -1)" opacity=".35"/></g>
           <g class="glints" stroke="#F7EED6" stroke-linecap="round">
-            <line x1="128" y1="138" x2="192" y2="138" stroke-width="2"/><line x1="138" y1="148" x2="182" y2="148" stroke-width="1.7"/>
-            <line x1="146" y1="158" x2="174" y2="158" stroke-width="1.4"/><line x1="152" y1="168" x2="168" y2="168" stroke-width="1.2"/>
-            <line x1="156" y1="178" x2="164" y2="178" stroke-width="1"/>
+            <line x1="132" y1="140" x2="188" y2="140" stroke-width="1.6"/><line x1="140" y1="150" x2="180" y2="150" stroke-width="1.3"/>
+            <line x1="148" y1="160" x2="172" y2="160" stroke-width="1.1"/><line x1="226" y1="146" x2="246" y2="146" stroke-width="1"/>
+            <line x1="230" y1="156" x2="242" y2="156" stroke-width=".9"/>
           </g>
-          <g class="palm" fill="none" stroke="#E9DFB4" stroke-width="2" stroke-linecap="round">
-            <path d="M262 128 C 258 100, 256 76, 266 50" stroke-width="3"/>
-            <path d="M266 50 C 248 40, 232 44, 222 58"/><path d="M266 50 C 252 30, 236 28, 226 32"/>
-            <path d="M266 50 C 276 30, 292 28, 304 36"/><path d="M266 50 C 284 44, 298 52, 306 64"/><path d="M266 50 C 266 34, 262 22, 254 16"/>
-          </g>
-          <g class="birds" fill="none" stroke="#F0E8D0" stroke-width="1.6" stroke-linecap="round">
-            <path class="b1" d="M70 62 q6 -6 12 0 q6 -6 12 0"/><path class="b2" d="M98 44 q4 -4 8 0 q4 -4 8 0"/>
-          </g>
+          <g class="stars" fill="#F7EED6"><circle cx="40" cy="22" r="1"/><circle cx="78" cy="12" r=".8"/><circle cx="150" cy="18" r="1.1"/><circle cx="190" cy="10" r=".8"/><circle cx="290" cy="24" r="1"/></g>
         </svg>
       </div>
       <p class="caps rv" style="--i:1">Celebraremos en</p>
