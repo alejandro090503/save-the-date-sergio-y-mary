@@ -366,6 +366,11 @@ footer .credit a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(25
 background:linear-gradient(100deg,#B8923A 0%,#E9CF85 30%,#F7E7CE 48%,#D4AF37 66%,#A8841F 100%);background-size:220% 100%;animation:goldBtn 6s linear infinite,pulse 2.4s ease-in-out infinite;
 border:1px solid rgba(255,240,200,.8);box-shadow:0 10px 30px -8px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,250,230,.8),0 0 0 4px rgba(212,175,55,.2)}
 @keyframes goldBtn{from{background-position:120% 0}to{background-position:-100% 0}}
+.s-fotos{background:var(--light-2)}
+.pol-row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,4vw,34px);max-width:560px;margin:34px auto 0}
+.pol{margin:0;background:#FBF8EE;padding:8px 8px 34px;border-radius:4px;box-shadow:0 22px 50px -18px rgba(31,43,21,.45),0 0 0 1px rgba(212,175,55,.35);transform:rotate(var(--r))}
+.js .pol.rv.in{transform:rotate(var(--r))}
+.pol img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:2px}
 </style>
 </head>
 <body class="locked">
@@ -420,6 +425,18 @@ border:1px solid rgba(255,240,200,.8);box-shadow:0 10px 30px -8px rgba(0,0,0,.7)
             <p class="quote rv" style="--i:5">Guarda esta fecha<br>para celebrar con nosotros.</p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOTOS -->
+  <section class="sec light s-fotos" style="--prev:239 234 217;--next:239 234 217">
+    <div class="sec-in">
+      <p class="caps rv">Quince años después</p>
+      <h2 class="rv" style="--i:1">Otra vez <em class="plum-grad">sí</em></h2>
+      <div class="pol-row">
+        <div class="lev" style="--dur:7s;--rot:-.6deg"><figure class="pol rv" style="--i:2;--r:-4deg"><img src="foto7.jpg" alt="Sergio y Mary"></figure></div>
+        <div class="lev" style="--dur:8s;--d:-3s;--rot:.6deg"><figure class="pol rv" style="--i:3;--r:3deg"><img src="foto8.jpg" alt="Sergio y Mary"></figure></div>
       </div>
     </div>
   </section>
