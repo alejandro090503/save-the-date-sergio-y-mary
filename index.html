@@ -376,18 +376,52 @@ border:1px solid rgba(255,240,200,.8);box-shadow:0 10px 30px -8px rgba(0,0,0,.7)
 .scene .moon{animation:breathe 6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
 .scene .stars circle{animation:winTw 3s ease-in-out infinite}.scene .stars circle:nth-child(2n){animation-delay:1.2s}
 @media (prefers-reduced-motion:reduce){.scene *{animation:none!important}}
+
+#langPick{position:fixed;inset:0;z-index:10050;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(ellipse at 50% 40%,#3a4f25 0%,#22301a 70%,#1a2513 100%);transition:opacity .8s ease,visibility .8s}
+#langPick.out{opacity:0;visibility:hidden}
+.lp-glow{position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,.22),transparent 65%);animation:lpGlow 6s ease-in-out infinite}
+@keyframes lpGlow{0%,100%{transform:scale(.9);opacity:.7}50%{transform:scale(1.1);opacity:1}}
+.lp-box{position:relative;text-align:center;max-width:340px;width:100%;padding:44px 26px 34px;border-radius:26px;border:1px solid rgba(212,175,55,.45);background:rgba(43,59,28,.55);box-shadow:0 30px 80px -20px rgba(0,0,0,.7),inset 0 0 0 6px rgba(43,59,28,.4),inset 0 0 0 7px rgba(212,175,55,.18);animation:lpIn 1s cubic-bezier(.2,.8,.2,1) both}
+@keyframes lpIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+.lp-mono{display:inline-block;font-family:var(--display);font-style:italic;font-size:54px;line-height:1.2;padding:.12em .3em;margin:-.12em -.3em;background:linear-gradient(100deg,#B8923A,#F7E7CE 40%,#D4AF37 60%,#B8923A);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:goldBtn 6s linear infinite}
+.lp-line{display:block;width:120px;height:1px;margin:14px auto 18px;background:linear-gradient(90deg,transparent,#D4AF37,transparent)}
+.lp-t{font-family:var(--serif);font-weight:600;font-size:24px;color:#F7E7CE;line-height:1.25}
+.lp-t2{font-style:italic;font-weight:500;font-size:19px;color:#C5BB9F;margin-top:2px}
+.lp-btns{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px}
+.lp-btn{min-height:76px;border-radius:16px;border:1.5px solid rgba(212,175,55,.55);background:rgba(240,232,208,.06);color:#F7E7CE;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:background .3s,transform .3s;touch-action:manipulation}
+.lp-btn b{font-family:var(--serif);font-weight:600;font-size:22px}
+.lp-btn small{font-family:var(--caps);font-weight:600;font-size:12px;letter-spacing:.3em;color:#D4AF37}
+.lp-btn:hover,.lp-btn:focus-visible{background:rgba(212,175,55,.18);border-color:#D4AF37;transform:translateY(-2px);outline:none}
+.lang-fab{position:fixed;left:16px;bottom:max(16px,env(safe-area-inset-bottom));z-index:60;min-width:46px;height:46px;border-radius:999px;border:1px solid rgba(212,175,55,.6);background:rgba(31,43,21,.75);color:#F7E7CE;font-family:var(--caps);font-weight:600;font-size:13px;letter-spacing:.14em;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .6s}
+.lang-fab.on{opacity:1;pointer-events:auto}
+@media (prefers-reduced-motion:reduce){.lp-glow,.lp-box,.lp-mono{animation:none!important}}
 </style>
 </head>
 <body class="locked">
 <script>document.documentElement.classList.add('js')</script>
 <canvas id="sparks" aria-hidden="true"></canvas>
 
+
+<!-- SELECTOR DE IDIOMA -->
+<div id="langPick" role="dialog" aria-label="Idioma / Language">
+  <div class="lp-glow" aria-hidden="true"></div>
+  <div class="lp-box">
+    <span class="lp-mono">S&amp;M</span>
+    <span class="lp-line" aria-hidden="true"></span>
+    <p class="lp-t">Elige tu idioma</p>
+    <p class="lp-t lp-t2">Choose your language</p>
+    <div class="lp-btns">
+      <button type="button" class="lp-btn" data-l="es"><b>Español</b><small>ES</small></button>
+      <button type="button" class="lp-btn" data-l="en"><b>English</b><small>EN</small></button>
+    </div>
+  </div>
+</div>
 <!-- SOBRE -->
 <div id="sobre" role="button" tabindex="0" aria-label="Toca para abrir">
   <img class="sobre-img" src="sobre-sm.jpg" alt="" fetchpriority="high">
   <video class="sobre-vid" id="sobreVid" src="sobre-abre.mp4" muted playsinline preload="auto" poster="sobre-sm.jpg"></video>
   <div class="sobre-veil" aria-hidden="true"></div>
-  <p class="sobre-hint"><span>Toca para abrir</span></p>
+  <p class="sobre-hint" data-en="&lt;span&gt;Tap to open&lt;/span&gt;"><span>Toca para abrir</span></p>
 </div>
 
 <!-- PORTADA -->
@@ -403,13 +437,13 @@ border:1px solid rgba(255,240,200,.8);box-shadow:0 10px 30px -8px rgba(0,0,0,.7)
     <div class="hero-eye fade t1"><i></i><p class="caps">Save the date</p><i></i></div>
     <h1 class="names" aria-label="Sergio y Mary">
       <span class="row lilac-grad" data-split>Sergio</span>
-      <span class="and">y</span>
+      <span class="and" data-en="and">y</span>
       <span class="row lilac-grad" data-split>Mary</span>
     </h1>
-    <div class="hero-date fade t2" aria-label="Sábado 26 de diciembre de 2026">
+    <div class="hero-date fade t2" aria-label="Sábado 26 de diciembre de 2026" data-en="&lt;span&gt;SAT&lt;small&gt;DAY&lt;/small&gt;&lt;/span&gt;&lt;i&gt;&lt;/i&gt;&lt;span&gt;26&lt;small&gt;DEC&lt;/small&gt;&lt;/span&gt;&lt;i&gt;&lt;/i&gt;&lt;span&gt;2026&lt;small&gt;YEAR&lt;/small&gt;&lt;/span&gt;">
       <span>SÁB<small>DÍA</small></span><i></i><span>26<small>DIC</small></span><i></i><span>2026<small>AÑO</small></span>
     </div>
-    <p class="hero-place fade t3">15 años de casados · Brooklyn, NY</p>
+    <p class="hero-place fade t3" data-en="15 years married · Brooklyn, NY">15 años de casados · Brooklyn, NY</p>
   </div>
   <div class="scroll-cue fade t4" aria-hidden="true"><b></b></div>
 </header>
@@ -423,11 +457,11 @@ border:1px solid rgba(255,240,200,.8);box-shadow:0 10px 30px -8px rgba(0,0,0,.7)
         <div class="lev" style="--dur:8s;position:absolute;inset:0">
           <div class="oval-bg" aria-hidden="true"></div>
           <div class="oval-in">
-            <p class="caps rv" style="--i:1">Una noticia especial</p>
-            <h2 class="rv" style="--i:2">Renovamos <em class="plum-grad">nuestros votos</em></h2>
-            <p class="rv" style="--i:3">Después de 15 años de matrimonio queremos volver a decirnos «sí» ante Dios, y no imaginamos ese día sin ti.</p>
+            <p class="caps rv" style="--i:1" data-en="Special news">Una noticia especial</p>
+            <h2 class="rv" style="--i:2" data-en="Renewing &lt;em class=&quot;plum-grad&quot;&gt;our vows&lt;/em&gt;">Renovamos <em class="plum-grad">nuestros votos</em></h2>
+            <p class="rv" style="--i:3" data-en="After 15 years of marriage we want to say “I do” to each other again before God, and we can’t imagine that day without you.">Después de 15 años de matrimonio queremos volver a decirnos «sí» ante Dios, y no imaginamos ese día sin ti.</p>
             <div class="flourish rv" style="--i:4" aria-hidden="true"><i></i><b></b><i></i></div>
-            <p class="quote rv" style="--i:5">Guarda esta fecha<br>para celebrar con nosotros.</p>
+            <p class="quote rv" style="--i:5" data-en="Save this date&lt;br&gt;to celebrate with us.">Guarda esta fecha<br>para celebrar con nosotros.</p>
           </div>
         </div>
       </div>
@@ -437,8 +471,8 @@ border:1px solid rgba(255,240,200,.8);box-shadow:0 10px 30px -8px rgba(0,0,0,.7)
   <!-- FOTOS -->
   <section class="sec light s-fotos" style="--prev:239 234 217;--next:239 234 217">
     <div class="sec-in">
-      <p class="caps rv">Quince años después</p>
-      <h2 class="rv" style="--i:1">Otra vez <em class="plum-grad">sí</em></h2>
+      <p class="caps rv" data-en="Fifteen years later">Quince años después</p>
+      <h2 class="rv" style="--i:1" data-en="Yes, &lt;em class=&quot;plum-grad&quot;&gt;again&lt;/em&gt;">Otra vez <em class="plum-grad">sí</em></h2>
       <div class="pol-row">
         <div class="lev" style="--dur:7s;--rot:-.6deg"><figure class="pol rv" style="--i:2;--r:-4deg"><img src="foto7.jpg" alt="Sergio y Mary"></figure></div>
         <div class="lev" style="--dur:8s;--d:-3s;--rot:.6deg"><figure class="pol rv" style="--i:3;--r:3deg"><img src="foto8.jpg" alt="Sergio y Mary"></figure></div>
@@ -451,16 +485,16 @@ border:1px solid rgba(255,240,200,.8);box-shadow:0 10px 30px -8px rgba(0,0,0,.7)
     <div class="tex" data-speed="-.18" style="background-image:url('ink-azul.jpg');background-position:center top;opacity:.55" aria-hidden="true"></div>
     <div class="sec-in">
       <div class="head">
-        <p class="caps rv">Aparta la fecha</p>
-        <h2 class="rv" style="--i:1">Márcalo en tu <em>calendario</em></h2>
+        <p class="caps rv" data-en="Save the date">Aparta la fecha</p>
+        <h2 class="rv" style="--i:1" data-en="Mark it on your &lt;em&gt;calendar&lt;/em&gt;">Márcalo en tu <em>calendario</em></h2>
       </div>
       <div class="cal-grid">
         <div class="cal-wrap rv" style="--i:2">
           <div class="lev" style="--dur:7s;--rot:-.6deg">
             <div class="cal" id="cal">
-              <div class="cal-top">Diciembre<small>2026</small></div>
+              <div class="cal-top" data-en="December&lt;small&gt;2026&lt;/small&gt;">Diciembre<small>2026</small></div>
               <div class="grid">
-                <span class="h">L</span><span class="h">M</span><span class="h">M</span><span class="h">J</span><span class="h">V</span><span class="h">S</span><span class="h">D</span>
+                <span class="h" data-x="1" data-en="M">L</span><span class="h" data-x="1" data-en="T">M</span><span class="h" data-x="1" data-en="W">M</span><span class="h" data-x="1" data-en="T">J</span><span class="h" data-x="1" data-en="F">V</span><span class="h" data-x="1" data-en="S">S</span><span class="h" data-x="1" data-en="S">D</span>
                 <span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
                 <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span>
                 <span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span>
@@ -471,23 +505,23 @@ border:1px solid rgba(255,240,200,.8);box-shadow:0 10px 30px -8px rgba(0,0,0,.7)
           </div>
         </div>
         <div class="cal-side">
-          <p class="when rv" style="--i:3">Sábado 26 de diciembre<br>de 2026</p>
+          <p class="when rv" style="--i:3" data-en="Saturday, December 26,&lt;br&gt;2026">Sábado 26 de diciembre<br>de 2026</p>
           <p class="city rv" style="--i:4">Brooklyn, New York</p>
           <div class="flourish rv" style="--i:5" aria-hidden="true"><i></i><b></b><i></i></div>
           <div class="lev" style="--dur:9s;--d:-3s">
             <div class="ticket rv" style="--i:6">
-              <p class="caps">Faltan</p>
+              <p class="caps" data-en="Only">Faltan</p>
               <div class="cd">
-                <div><b id="cd-d">—</b><span>Días</span></div>
-                <div><b id="cd-h">—</b><span>Horas</span></div>
-                <div><b id="cd-m">—</b><span>Min</span></div>
-                <div><b id="cd-s">—</b><span>Seg</span></div>
+                <div><b id="cd-d">—</b><span data-en="Days">Días</span></div>
+                <div><b id="cd-h">—</b><span data-en="Hours">Horas</span></div>
+                <div><b id="cd-m">—</b><span data-en="Min">Min</span></div>
+                <div><b id="cd-s">—</b><span data-en="Sec">Seg</span></div>
               </div>
             </div>
           </div>
           <a class="btn rv" style="--i:7" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=15+Aniversario+Sergio+%26+Mary&amp;dates=20261226T220000Z/20261227T080000Z&amp;location=Brooklyn,+New+York">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="1.5"/><path d="M3 10h18M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/></svg>
-            Agregar al calendario
+            <span data-en="Add to calendar">Agregar al calendario</span>
           </a>
         </div>
       </div>
@@ -540,11 +574,11 @@ border:1px solid rgba(255,240,200,.8);box-shadow:0 10px 30px -8px rgba(0,0,0,.7)
           <g class="stars" fill="#F7EED6"><circle cx="40" cy="22" r="1"/><circle cx="78" cy="12" r=".8"/><circle cx="150" cy="18" r="1.1"/><circle cx="190" cy="10" r=".8"/><circle cx="290" cy="24" r="1"/></g>
         </svg>
       </div>
-      <p class="caps rv" style="--i:1">Celebraremos en</p>
+      <p class="caps rv" style="--i:1" data-en="We will celebrate in">Celebraremos en</p>
       <h2 class="rv lilac-grad" style="--i:2">Brooklyn, <em>New York</em></h2>
-      <p class="rv" style="--i:3">Una noche para dar gracias por estos 15 años, rodeados de nuestra familia y de quienes amamos. Si vienes de fuera, te recomendamos planear tu viaje con tiempo.</p>
+      <p class="rv" style="--i:3" data-en="A night to give thanks for these 15 years, surrounded by our family and the people we love. If you are traveling from out of town, we recommend planning your trip early.">Una noche para dar gracias por estos 15 años, rodeados de nuestra familia y de quienes amamos. Si vienes de fuera, te recomendamos planear tu viaje con tiempo.</p>
       <div class="flourish rv" style="--i:4" aria-hidden="true"><i></i><b></b><i></i></div>
-      <div class="lev" style="--dur:8s;--d:-2s"><div class="dress rv" style="--i:5"><span class="caps">Código de vestimenta · Tropical</span><b>Vestidos con flores</b><b>o guayaberas</b></div></div>
+      <div class="lev" style="--dur:8s;--d:-2s"><div class="dress rv" style="--i:5"><span class="caps" data-en="Dress code · Tropical">Código de vestimenta · Tropical</span><b data-en="Ladies: floral dresses">Damas: vestidos con flores</b><b data-en="Gentlemen: guayabera or casual shirt">Caballeros: guayabera o camisa casual</b></div></div>
     </div>
   </section>
 
@@ -560,9 +594,9 @@ border:1px solid rgba(255,240,200,.8);box-shadow:0 10px 30px -8px rgba(0,0,0,.7)
             <span class="b-card"><span>SAVE THE DATE</span><b>26 · 12 · 2026</b></span>
             <span class="b-front"></span><span class="b-flap"></span><span class="b-seal"></span>
           </div>
-          <p class="caps rv" style="--i:2">Muy pronto</p>
-          <h2 class="rv" style="--i:3">La invitación llegará <em class="plum-grad">a tus manos</em></h2>
-          <p class="rv" style="--i:4">Recibirás todos los detalles: el lugar, los horarios y la confirmación de tu asistencia. Por ahora, solo guarda este día para nosotros.</p>
+          <p class="caps rv" style="--i:2" data-en="Coming soon">Muy pronto</p>
+          <h2 class="rv" style="--i:3" data-en="The invitation will arrive &lt;em class=&quot;plum-grad&quot;&gt;in your hands&lt;/em&gt;">La invitación llegará <em class="plum-grad">a tus manos</em></h2>
+          <p class="rv" style="--i:4" data-en="You will receive all the details: the venue, the schedule and your RSVP. For now, just save this day for us.">Recibirás todos los detalles: el lugar, los horarios y la confirmación de tu asistencia. Por ahora, solo guarda este día para nosotros.</p>
         </div>
       </div>
     </div>
@@ -573,9 +607,10 @@ border:1px solid rgba(255,240,200,.8);box-shadow:0 10px 30px -8px rgba(0,0,0,.7)
   <div class="aurora" aria-hidden="true"><span class="silk"></span><i></i><i></i><i></i><i></i></div>
   <p class="names-foot lilac-grad rv">Sergio &amp; Mary</p>
   <p class="when caps rv" style="--i:1">26 · 12 · 2026</p>
-  <p class="credit">Invitación digital por <a href="https://www.instagram.com/elysium.invitaciones/" target="_blank" rel="noopener">@elysium.invitaciones</a></p>
+  <p class="credit"><span data-en="Digital invitation by">Invitación digital por</span> <a href="https://www.instagram.com/elysium.invitaciones/" target="_blank" rel="noopener">@elysium.invitaciones</a></p>
 </footer>
 
+<button class="lang-fab" id="langFab" type="button" aria-label="Cambiar idioma / Change language">EN</button>
 <audio id="music" src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/audio/boda-sergio-mary/cancion.mp3" loop preload="none" playsinline></audio>
 <button class="vinyl-btn" id="vinyl" type="button" aria-label="Pausar música">
   <div class="vinyl-tonearm"><div class="vinyl-tonearm-pivot"></div><div class="vinyl-tonearm-line"></div><div class="vinyl-tonearm-head"></div></div>
@@ -726,6 +761,30 @@ border:1px solid rgba(255,240,200,.8);box-shadow:0 10px 30px -8px rgba(0,0,0,.7)
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
+})();
+</script>
+<script>
+/* ══ IDIOMA ES/EN ══ */
+(function(){
+  var L='es';
+  function apply(l){
+    L=l;document.documentElement.lang=l;
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if(el.dataset.es===undefined) el.dataset.es=el.innerHTML;
+      el.innerHTML=l==='en'?el.dataset.en:el.dataset.es;
+    });
+    var f=document.getElementById('langFab'); if(f) f.textContent=l==='en'?'ES':'EN';
+    var v=document.getElementById('vinyl'); if(v) v.setAttribute('aria-label', l==='en'?'Play or pause music':'Reproducir o pausar música');
+    var h=document.querySelector('.hero-date'); if(h) h.setAttribute('aria-label', l==='en'?'Saturday, December 26, 2026':'Sábado 26 de diciembre de 2026');
+  }
+  var pick=document.getElementById('langPick');
+  pick.querySelectorAll('.lp-btn').forEach(function(b){
+    b.addEventListener('click',function(e){e.stopPropagation();apply(b.dataset.l);pick.classList.add('out');setTimeout(function(){pick.style.display='none';},850);
+      document.getElementById('langFab').classList.add('on');});
+  });
+  var q=new URLSearchParams(location.search).get('lang');
+  if(q==='en'||q==='es'){apply(q);pick.style.display='none';document.getElementById('langFab').classList.add('on');}
+  document.getElementById('langFab').addEventListener('click',function(){apply(L==='es'?'en':'es');});
 })();
 </script>
 </body>
