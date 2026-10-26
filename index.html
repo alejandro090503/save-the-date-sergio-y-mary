@@ -361,6 +361,11 @@ footer .credit a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(25
   .scroll-cue{display:none}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.ch,.fade,.js .rv{opacity:1!important;transform:none!important;filter:none!important}}
+#sobre .sobre-hint{text-shadow:none;animation:none}
+#sobre .sobre-hint span{display:inline-block;font-family:var(--caps);font-weight:600;font-size:14px;letter-spacing:.3em;padding:15px 30px 15px 34px;border-radius:999px;color:#22301a;
+background:linear-gradient(100deg,#B8923A 0%,#E9CF85 30%,#F7E7CE 48%,#D4AF37 66%,#A8841F 100%);background-size:220% 100%;animation:goldBtn 6s linear infinite,pulse 2.4s ease-in-out infinite;
+border:1px solid rgba(255,240,200,.8);box-shadow:0 10px 30px -8px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,250,230,.8),0 0 0 4px rgba(212,175,55,.2)}
+@keyframes goldBtn{from{background-position:120% 0}to{background-position:-100% 0}}
 </style>
 </head>
 <body class="locked">
@@ -372,7 +377,7 @@ footer .credit a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(25
   <img class="sobre-img" src="sobre-sm.jpg" alt="" fetchpriority="high">
   <video class="sobre-vid" id="sobreVid" src="sobre-abre.mp4" muted playsinline preload="auto" poster="sobre-sm.jpg"></video>
   <div class="sobre-veil" aria-hidden="true"></div>
-  <p class="sobre-hint caps">Toca el sello para abrir</p>
+  <p class="sobre-hint"><span>Toca para abrir</span></p>
 </div>
 
 <!-- PORTADA -->
